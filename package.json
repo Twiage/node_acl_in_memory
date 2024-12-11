@@ -1,6 +1,6 @@
 {
   "name": "node_acl_mongodb",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "An Access Control List module based on memory, or MongoDB with Express middleware support",
   "author": "Twiage",
   "forked_from": "https://github.com/flash-oss/node_acl",
@@ -27,7 +27,10 @@
     "test_mongo_single": "ACL_BACKEND=mongo_single mocha",
     "cover": "nyc npm run test"
   },
-  "files": ["index.js", "lib"],
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "eslintConfig": {
     "parserOptions": {
       "ecmaVersion": 2023
