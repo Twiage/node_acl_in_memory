@@ -1,6 +1,6 @@
 {
   "name": "node_acl_in_memory",
-  "version": "4.1.3",
+  "version": "4.1.4",
   "description": "An Access Control List module based on memory with Express middleware support",
   "author": "Twiage",
   "forked_from": "https://github.com/flash-oss/node_acl",
