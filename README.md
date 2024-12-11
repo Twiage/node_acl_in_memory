@@ -10,28 +10,12 @@ Create roles and assign roles to users. Sometimes it may even be useful to creat
 to get the finest granularity possible, while in other situations you will give the _asterisk_ permission
 for admin kind of functionality.
 
-A MongoDB and In-Memory based backends are provided built-in in the module. There are other third party backends such as [_knex_](https://github.com/christophertrudel/node_acl_knex) based, [_firebase_](https://github.com/tonila/node_acl_firebase) and [_elasticsearch_](https://github.com/adnanesaghir/acl-elasticsearch-backend). There is also an alternative memory backend that supports [_regexps_](https://github.com/futurechan/node_acl-mem-regexp).
-
 **Forked, improved and renamed from [`acl`](https://github.com/OptimalBits/node_acl) to [`acl2`](https://www.npmjs.com/package/acl2)**
 
 ### Breaking changes comparing to the original `acl`
 
-- The backend constructors take options object instead of multiple argument.
-
-Original `acl`:
-
-```js
-new ACL.mongodbBackend(db, prefix, useSingle, useRawCollectionNames);
-```
-
-New `acl2`:
-
-```js
-new ACL.mongodbBackend({ client, db, prefix = "acl_", useSingle, useRawCollectionNames })
-```
-
-- The new default `"acl_"` prefix for MongoDB.
-
+- redis and mongodb backend are not supported (since we don't use it). Memory works with no changes.
+- callbacks are not supported, only promises.
 - Maintained and modern code infrastructure.
 
 ### Other notable changes comparing to the original `acl`
@@ -42,9 +26,7 @@ new ACL.mongodbBackend({ client, db, prefix = "acl_", useSingle, useRawCollectio
 - Promises only, no callbacks
 - Upgraded all possible dependencies
 - Made unit test debuggable, split them by backend type
-- MongoDB backend accepts either `client` or `db` [objects](https://github.com/mongodb/node-mongodb-native/blob/3.0/CHANGES_3.0.0.md)
 - Removed all possible warnings
-- Run CI tests using multiple MongoDB versions.
 
 ## Features
 
@@ -60,13 +42,7 @@ new ACL.mongodbBackend({ client, db, prefix = "acl_", useSingle, useRawCollectio
 Using npm:
 
 ```shell script
-npm install acl2
-```
-
-Optionally:
-
-```shell script
-npm install mongodb
+npm install node_acl_in_memory
 ```
 
 ## Documentation
@@ -94,13 +70,10 @@ npm install mongodb
 Create your acl module by requiring it and instantiating it with a valid backend instance:
 
 ```javascript
-const ACL = require("acl2");
+const ACL = require("node_acl_in_memory");
 
 // Or Using the memory backend
 acl = new ACL(new ACL.memoryBackend());
-
-// Or Using the MongoDB backend
-acl = new ACL(new ACL.mongodbBackend({ client: mongoClient }));
 ```
 
 See below for full list of backend constructor arguments.
@@ -501,41 +474,9 @@ To create a custom getter for userId, pass a function(req, res) which returns th
 
 <a name="backend" />
 
-### mongodbBackend
-
-Creates a MongoDB backend instance.
-
-**Arguments**
-
-```javascript
-    client    {Object} MongoClient instance. If missing, the `db` will be used.
-    db        {Object} Database instance. If missing, the `client` will be used.
-    prefix    {String} Optional collection prefix. Default is "acl_".
-    useSingle {Boolean} Create one collection for all resources (defaults to false)
-```
-
-Example:
-
-```javascript
-const client = await require("mongodb").connect(
-  "mongodb://127.0.0.1:27017/acl_test"
-);
-const ACL = require("acl2");
-const acl = new ACL(new ACL.mongodbBackend({ client, useSingle: true }));
-```
-
 ## Tests
-
-Run tests with `npm`. Requires both local databases running - MongoDB.
-
-```shell script
-npm test
-```
-
-You can run tests for Memory, or MongoDB only like this:
+You can run tests for Memory only like this:
 
 ```shell script
 npm run test_memory
-npm run test_mongo
-npm run test_mongo_single
 ```
