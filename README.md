@@ -10,7 +10,7 @@ Create roles and assign roles to users. Sometimes it may even be useful to creat
 to get the finest granularity possible, while in other situations you will give the _asterisk_ permission
 for admin kind of functionality.
 
-**Forked, improved and renamed from [`acl`](https://github.com/OptimalBits/node_acl) to [`acl2`](https://www.npmjs.com/package/acl2)**
+**Forked, removed mongodb/redis and renamed from [`acl2`](https://www.npmjs.com/package/acl2) to [`node_acl_in_memory`](https://github.com/Twiage/node_acl_in_memory) to **
 
 ### Breaking changes comparing to the original `acl`
 
