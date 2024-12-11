@@ -1,6 +1,6 @@
 {
   "name": "node_acl_in_memory",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "An Access Control List module based on memory with Express middleware support",
   "author": "Twiage",
   "forked_from": "https://github.com/flash-oss/node_acl",
@@ -24,7 +24,10 @@
     "test_memory": "ACL_BACKEND=memory mocha",
     "cover": "nyc npm run test"
   },
-  "files": ["index.js", "lib"],
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "eslintConfig": {
     "parserOptions": {
       "ecmaVersion": 2023
