@@ -10,7 +10,7 @@ Create roles and assign roles to users. Sometimes it may even be useful to creat
 to get the finest granularity possible, while in other situations you will give the _asterisk_ permission
 for admin kind of functionality.
 
-A Redis, MongoDB and In-Memory based backends are provided built-in in the module. There are other third party backends such as [_knex_](https://github.com/christophertrudel/node_acl_knex) based, [_firebase_](https://github.com/tonila/node_acl_firebase) and [_elasticsearch_](https://github.com/adnanesaghir/acl-elasticsearch-backend). There is also an alternative memory backend that supports [_regexps_](https://github.com/futurechan/node_acl-mem-regexp).
+A MongoDB and In-Memory based backends are provided built-in in the module. There are other third party backends such as [_knex_](https://github.com/christophertrudel/node_acl_knex) based, [_firebase_](https://github.com/tonila/node_acl_firebase) and [_elasticsearch_](https://github.com/adnanesaghir/acl-elasticsearch-backend). There is also an alternative memory backend that supports [_regexps_](https://github.com/futurechan/node_acl-mem-regexp).
 
 **Forked, improved and renamed from [`acl`](https://github.com/OptimalBits/node_acl) to [`acl2`](https://www.npmjs.com/package/acl2)**
 
@@ -22,17 +22,15 @@ Original `acl`:
 
 ```js
 new ACL.mongodbBackend(db, prefix, useSingle, useRawCollectionNames);
-new ACL.redisBackend(redis, prefix);
 ```
 
 New `acl2`:
 
 ```js
 new ACL.mongodbBackend({ client, db, prefix = "acl_", useSingle, useRawCollectionNames })
-new ACL.redisBackend({ redis, prefix = "acl_" })
 ```
 
-- The new default `"acl_"` prefix for both Redis and MongoDB.
+- The new default `"acl_"` prefix for MongoDB.
 
 - Maintained and modern code infrastructure.
 
@@ -69,8 +67,6 @@ Optionally:
 
 ```shell script
 npm install mongodb
-
-npm install redis
 ```
 
 ## Documentation
@@ -99,9 +95,6 @@ Create your acl module by requiring it and instantiating it with a valid backend
 
 ```javascript
 const ACL = require("acl2");
-
-// Using Redis backend
-acl = new ACL(new ACL.redisBackend({ redis: redisClient }));
 
 // Or Using the memory backend
 acl = new ACL(new ACL.memoryBackend());
@@ -531,40 +524,18 @@ const ACL = require("acl2");
 const acl = new ACL(new ACL.mongodbBackend({ client, useSingle: true }));
 ```
 
-### redisBackend
-
-Creates a Redis backend instance.
-
-**Arguments**
-
-```javascript
-    client    {Object} Redis client instance.
-    prefix    {String} Optional prefix. Default is "acl_".
-```
-
-Example:
-
-```javascript
-const client = await require("redis").createClient(6379, "127.0.0.1").connect();
-const ACL = require("acl2");
-const acl = new ACL(
-  new acl.redisBackend({ redis: client, prefix: "my_acl_prefix_" })
-);
-```
-
 ## Tests
 
-Run tests with `npm`. Requires both local databases running - MongoDB and Redis.
+Run tests with `npm`. Requires both local databases running - MongoDB.
 
 ```shell script
 npm test
 ```
 
-You can run tests for Memory, Redis, or MongoDB only like this:
+You can run tests for Memory, or MongoDB only like this:
 
 ```shell script
 npm run test_memory
-npm run test_redis
 npm run test_mongo
 npm run test_mongo_single
 ```
